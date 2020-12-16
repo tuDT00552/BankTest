@@ -11,7 +11,7 @@ import lombok.Setter;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "account")
+@Table(name = "tudt_account")
 @Getter
 @Setter
 @EntityListeners(AuditingEntityListener.class)

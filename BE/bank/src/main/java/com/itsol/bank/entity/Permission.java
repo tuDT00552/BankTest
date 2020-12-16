@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "t_permission")
+@Table(name = "tudt_permission")
 @Getter
 @Setter
 public class Permission extends BaseEntity {

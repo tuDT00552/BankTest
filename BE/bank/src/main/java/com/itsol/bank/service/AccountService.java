@@ -10,6 +10,8 @@ import com.itsol.bank.entity.Account;
 public interface AccountService {
 	Boolean checkExitsAccount(Account account);
 	Boolean checkAccountByAccountNum(Account account);
+	Boolean checkUpdateAccount(Account account);
+	Boolean checkAccountExits(Account account);
 	Account createAccount(Account account);
 	Account updateAccount(Account account);
 	ResponseEntity<Account> deleteAccount(Account account);

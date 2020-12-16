@@ -11,7 +11,7 @@ import lombok.Setter;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "t_token")
+@Table(name = "tudt_token")
 @Getter
 @Setter
 public class Token extends BaseEntity {

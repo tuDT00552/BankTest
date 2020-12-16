@@ -16,7 +16,7 @@ import lombok.Setter;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "t_user")
+@Table(name = "tudt_user")
 @Getter
 @Setter
 public class User extends BaseEntity {

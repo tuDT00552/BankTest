@@ -47,23 +47,41 @@ public class AccountController {
 
 	@PutMapping("/update-account")
 	@PreAuthorize("hasAnyAuthority('USER_UPDATE')")
-	public Account updateAccount(@RequestBody Account account) {
-		return accountService.updateAccount(account);
+	public ResponseEntity<?> updateAccount(@RequestBody Account account) {
+		if (accountService.checkExitsAccount(account)) {
+			return ResponseEntity.status(HttpStatus.CONFLICT)
+					.body(new ErrorMessage(HttpStatus.BAD_REQUEST.value(), "Tài khoản này không tồn tại!", "email"));
+		} else {
+			if (!accountService.checkUpdateAccount(account)) {
+				return ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorMessage(HttpStatus.CONFLICT.value(),
+						"Số tài khoản hoặc chỉ email này đã tồn tại", "email"));
+			} else {
+				accountService.updateAccount(account);
+				return ResponseEntity.status(HttpStatus.CREATED).body(account);
+			}
+		}
 	}
 
 	@DeleteMapping("/delete-account")
 	@PreAuthorize("hasAnyAuthority('USER_DELETE')")
-	public ResponseEntity<Account> deleteAccount(@RequestBody Account account) {
-		return accountService.deleteAccount(account);
+	public ResponseEntity<?> deleteAccount(@RequestBody Account account) {
+		if (accountService.checkExitsAccount(account)) {
+			return ResponseEntity.status(HttpStatus.CONFLICT)
+					.body(new ErrorMessage(HttpStatus.BAD_REQUEST.value(), "Tài khoản này không tồn tại!", "email"));
+		} else {
+			accountService.deleteAccount(account);
+			return ResponseEntity.status(HttpStatus.CREATED).body(account);
+		}
 	}
 
 	@GetMapping("/getListAccount")
 	public Page<Account> getListAccount(@RequestParam("page") int page, @RequestParam("size") int maxResultCount) {
 		return accountService.getPagingAccount(page, maxResultCount);
 	}
-	
+
 	@GetMapping("/searchListAccount")
-	public Page<Account> getListAccount(@RequestParam("keyword") String keyword, @RequestParam("page") int page, @RequestParam("size") int maxResultCount) {
+	public Page<Account> getListAccount(@RequestParam("keyword") String keyword, @RequestParam("page") int page,
+			@RequestParam("size") int maxResultCount) {
 		return accountService.searchByAllField(keyword, page, maxResultCount);
 	}
 }
